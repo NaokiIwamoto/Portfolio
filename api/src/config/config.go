@@ -22,10 +22,9 @@ var c *viper.Viper
 // Init initializes config
 func Init(env string) {
 	c = viper.New()
-	c.SetConfigType("yml")
+	c.SetConfigType("yaml")
 	c.SetConfigName(env)
-	c.AddConfigPath("config/environments/")
-	c.AddConfigPath("/run/secrets/")
+	c.AddConfigPath("src/config/environments/")
 	if err := c.ReadInConfig(); err != nil {
 		fmt.Println("config file read error")
 		fmt.Println(err)

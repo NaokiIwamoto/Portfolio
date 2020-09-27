@@ -5,19 +5,23 @@ import (
 
 	"github.com/api/src/config"
 	"github.com/api/src/database"
+	"github.com/api/src/models"
 	"github.com/api/src/server"
+
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 func main() {
-
+	// 設定ファイル名の指定
 	env := flag.String("e", "development", "")
 	flag.Parse()
 
+	// 設定の適応
 	config.Init(*env)
-	database.Init(false)
+
+	// DBコネクション
+	database.Init(true, &models.User{})
 	defer database.Close()
 	if err := server.Init(); err != nil {
 		panic(err)
