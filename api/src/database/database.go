@@ -8,18 +8,15 @@ import (
 var db *gorm.DB
 
 // Init initializes database
-func Init(isReset bool, models ...interface{}) {
+func Init(isReset bool, models ...interface{}) *gorm.DB {
 	c := config.GetConfig()
 	var err error
 
-	db, err := gorm.Open(c.GetString("database.provider"), c.GetString("database.url"))
+	db, err = gorm.Open(c.GetString("database.provider"), c.GetString("database.url"))
 	if err != nil {
 		panic(err)
 	}
-	if isReset {
-		db.DropTableIfExists(models)
-	}
-	db.AutoMigrate(models...)
+	return db
 }
 
 // GetDB returns database connection
@@ -27,7 +24,6 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-// Close closes database
-func Close() {
+func CloseDB() {
 	db.Close()
 }
