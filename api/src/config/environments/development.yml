@@ -1,3 +1,20 @@
 database:
   provider: "mysql"
   url: root:password@tcp(mysql:3306)/sample?parseTime=true
+server:
+  port: ":8080"
+  accessAllow:
+    - "http://localhost:3000"
+  allowMethods:
+    - "POST"
+    - "GET"
+    - "OPTIONS"
+    - "PUT"
+    - "DELETE"
+  allowHeaders:
+    - "Access-Control-Allow-Headers"
+    - "Content-Type"
+    - "Content-Length"
+    - "Accept-Encoding"
+    - "X-CSRF-Token"
+    - "Authorization"
