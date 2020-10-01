@@ -9,9 +9,10 @@ import (
 
 // User is struct of user
 type User struct {
-	UID      uuid.UUID `gorm:"type:char(36);primary_key"`
-	Username string    `form:"username"`
-	Password string    `form:"password"`
+	UID         uuid.UUID `gorm:"type:char(36);primary_key"`
+	Username    string    `form:"username"`
+	MailAddress string    `form:"mail_address"`
+	Password    string    `form:"password"`
 	models.BaseModel
 }
 
@@ -27,16 +28,15 @@ func Migrate() {
 }
 
 // CreateUser creates a user
-func CreateUser(username string, password string) error {
+func CreateUser(username, mailAddress, password string) error {
 	db := database.GetDB()
 	// Insert処理
-	db.Create(&User{Username: username, Password: password})
-	return nil
+	return db.Create(&User{Username: username, MailAddress: mailAddress, Password: password}).Error
 }
 
-func GetUser(username string) *User {
+func GetUser(mailAddress string) *User {
 	db := database.GetDB()
 	var user User
-	db.First(&user, "username = ?", username)
+	db.First(&user, "mail_address = ?", mailAddress)
 	return &user
 }

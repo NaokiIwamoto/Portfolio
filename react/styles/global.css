@@ -12,11 +12,6 @@ body {
   box-sizing: border-box;
 }
 
-a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
 a:hover {
   text-decoration: underline;
 }
@@ -24,4 +19,8 @@ a:hover {
 img {
   max-width: 100%;
   display: block;
+}
+
+.text-white {
+  color: white;
 }

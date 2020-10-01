@@ -8,10 +8,11 @@ import (
 
 // Signup is constructer for HealthController
 func Signup(c *gin.Context) {
-	username := c.PostForm("username")
+	username := c.PostForm("userName")
+	mailAddress := c.PostForm("mailAddress")
 	password := userPassHash(c.PostForm("password"))
 	// 登録ユーザーが重複していた場合にはじく処理
-	if err := user.CreateUser(username, password); err != nil {
+	if err := user.CreateUser(username, mailAddress, password); err != nil {
 		c.JSON(400, "")
 	}
 	c.JSON(200, "")
@@ -19,10 +20,10 @@ func Signup(c *gin.Context) {
 
 // Login is constructer for HealthController
 func Login(c *gin.Context) bool {
-	username := c.PostForm("username")
+	mailAddress := c.PostForm("mailAddress")
 	password := c.PostForm("password")
 	// 登録ユーザーが重複していた場合にはじく処理
-	dbpass := user.GetUser(username).Password
+	dbpass := user.GetUser(mailAddress).Password
 	return userPassMach(dbpass, password)
 }
 

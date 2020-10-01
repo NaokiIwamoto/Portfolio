@@ -12,8 +12,8 @@ import (
 )
 
 type login struct {
-	Username string `form:"username" json:"username" binding:"required"`
-	Password string `form:"password" json:"password" binding:"required"`
+	MailAddress string `form:"mailAddress" json:"mailAddress" binding:"required"`
+	Password    string `form:"password" json:"password" binding:"required"`
 }
 
 var identityKey = "id"
@@ -33,15 +33,15 @@ func JWTStart() *jwt.GinJWTMiddleware {
 			if err := c.ShouldBind(&loginVals); err != nil {
 				return "", jwt.ErrMissingLoginValues
 			}
-			log.Println(loginVals.Username)
-			userID := loginVals.Username
+			log.Println(loginVals.MailAddress)
+			mailAddress := loginVals.MailAddress
 			password := loginVals.Password
 
 			// if (userID == "admin" && password == "admin") || (userID == "test" && password == "test") {
 			if v := usercontroller.Login(c); v {
 				return &user.User{
-					Username: userID,
-					Password: password,
+					MailAddress: mailAddress,
+					Password:    password,
 				}, nil
 			}
 
